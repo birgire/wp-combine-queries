@@ -26,6 +26,23 @@ This should also work for main queries, by using the `posts_request` filter, for
 
 The plugin works on PHP 5.3+.
 
+###Installation
+
+Upload the plugin to your plugin folder and activate it.
+
+Then use some of the examples in your theme or plugin.
+
+###Default Parameters Of `WP_Combine_Query`:
+
+    $args = array(
+       'posts_per_page' => 5,
+       'paged'          => 1,
+       'sublimit'       => 1000,
+       'union'          => 'UNION',
+       'args'           => array(),
+    );
+
+
 ###Example 1: 
 
 Here we display all posts published today, sorted by comment count and after that all posts (excluding today's post) sorted by comment count.
