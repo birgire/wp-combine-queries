@@ -100,8 +100,8 @@ We can add the following code into our theme or in a plugin:
         // Loop:
         if( $results->have_posts() ):         
             while( $results->have_posts() ): $results->the_post();
-    	        the_title();
- 	    endwhile;
+    	        the_title();	    
+            endwhile;
         else:
             _e( 'Sorry no posts found!' ); 
         endif;
