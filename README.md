@@ -24,7 +24,6 @@ This implementation supports combining `N` sub-queries.
 
 This should also work for main queries, by using the `posts_request` filter, for example.
 
-The plugin works on PHP 5.3+.
 
 ###Installation
 
