@@ -29,7 +29,7 @@ The plugin works on PHP 5.3+.
 ###Example 1: 
 
 Here we display all posts published today, sorted by comment count and after that all posts (excluding today's post) sorted by comment count.
-This [example](http://wordpress.stackexchange.com/questions/159228/combining-two-wordpress-queries-with-pagination-is-not-working) was provided by Rober hue.
+This [example](http://wordpress.stackexchange.com/questions/159228/combining-two-wordpress-queries-with-pagination-is-not-working) was provided by Robert Hue.
 
 We can add the following code into our theme or in a plugin:
 
@@ -114,5 +114,5 @@ We could also combine more than two sub queries:
 
 0.0.2 
  - Added: Input parameter 'union' with possible values UNION and UNION ALL.
- - Fixed: Empty paged resulted in a sql error. ( Props: Robert hue)
+ - Fixed: Empty paged resulted in a sql error. ( Props: Robert Hue)
 
