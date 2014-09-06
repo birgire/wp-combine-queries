@@ -29,8 +29,9 @@ The plugin works on PHP 5.3+.
 ###Example 1: 
 
 Here we display all posts published today, sorted by comment count and after that all posts (excluding today's post) sorted by comment count.
+This [example](http://wordpress.stackexchange.com/questions/159228/combining-two-wordpress-queries-with-pagination-is-not-working) was provided by Rober hue.
 
-You can add the following code into your theme or in a plugin:
+We can add the following code into our theme or in a plugin:
 
     /**
      * Example #1 - Combine two sub queries:
@@ -94,20 +95,20 @@ You can add the following code into your theme or in a plugin:
 
 We could also combine more than two sub queries:
 
-   /**
-    * Example #2 - Combine four sub queries:
-    */
+    /**
+     * Example #2 - Combine four sub queries:
+     */
 
-   $args = array( 
-       'posts_per_page' => 10,
-       'paged'          => 1,
-       'sublimit'       => 1000,
-       'args'           => array( $args1, $args2, $args3, $args4 ),
-    );
+     $args = array( 
+         'posts_per_page' => 10,
+         'paged'          => 1,
+         'sublimit'       => 1000,
+         'args'           => array( $args1, $args2, $args3, $args4 ),
+      );
 
-    if( class_exists( 'WP_Combine_Queries' ) ):
-        $results = new WP_Combine_Queries( $args );
-    endif;
+      if( class_exists( 'WP_Combine_Queries' ) ):
+          $results = new WP_Combine_Queries( $args );
+      endif;
 
 ###Changelog
 
