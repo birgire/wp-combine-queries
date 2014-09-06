@@ -128,6 +128,10 @@ We could also combine more than two sub queries:
 
 ###Changelog
 
+0.0.3
+ - Added: GPL2+ License part
+ - Removed: Dropped namespace + anonymous function for wider PHP support.
+
 0.0.2 
  - Added: Input parameter 'union' with possible values UNION and UNION ALL.
  - Fixed: Empty paged resulted in a sql error. ( Props: Robert Hue)
