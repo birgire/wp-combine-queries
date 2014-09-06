@@ -95,15 +95,16 @@ We can add the following code into our theme or in a plugin:
 
     if( class_exists( 'WP_Combine_Queries' ) ):
 
-	$results = new WP_Combine_Queries( $args );
-      
-	if( $results->have_posts() ):         
-		while( $results->have_posts() ): $results->the_post();
-    	    the_title();
- 		endwhile;
-	else:
-		_e( 'Sorry no posts found!' );
-	endif;
+        $results = new WP_Combine_Queries( $args );
+       
+        // Loop:
+        if( $results->have_posts() ):         
+            while( $results->have_posts() ): $results->the_post();
+    	        the_title();
+ 	    endwhile;
+        else:
+            _e( 'Sorry no posts found!' ); 
+        endif;
 	 
     endif;
 
@@ -123,7 +124,11 @@ We could also combine more than two sub queries:
       );
 
       if( class_exists( 'WP_Combine_Queries' ) ):
+
           $results = new WP_Combine_Queries( $args );
+          
+          // Loop: ...
+
       endif;
 
 ###Changelog
