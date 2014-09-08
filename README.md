@@ -36,6 +36,7 @@ Then use some of the examples in your theme or plugin.
     $args = array(
        'posts_per_page' => 5,
        'paged'          => 1,
+       'offset'         => 0,
        'sublimit'       => 1000,
        'union'          => 'UNION',
        'args'           => array(),
