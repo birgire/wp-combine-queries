@@ -28,6 +28,9 @@ class WP_Combine_Queries extends WP_Query
         // Make sure paged > 0:
 	$this->args['paged'] = ( $this->args['paged'] > 0 ) ? $this->args['paged'] : 1;
 
+        // Make sure offset >= 0:
+	$this->args['offset'] = ( isset( $this->args['offset'] ) ) ? (int) $this->args['offset'] : 0;
+
         // Make sure we have UNION or UNION ALL:
 	$this->args['union'] = ( ! in_array( strtoupper( $this->args['union'] ), array( 'UNION', 'UNION ALL' ) ) ) ? $this->args['union'] : 'UNION';
 
@@ -56,7 +59,7 @@ class WP_Combine_Queries extends WP_Query
             $unions = '(' . join( ') ' . $this->args['union'] . ' (', $this->sub_sql ) . ' ) ';
 
             $request = sprintf( "SELECT SQL_CALC_FOUND_ROWS * FROM ( {$unions} ) as combined LIMIT %s,%s",
-                $this->args['posts_per_page'] * ( $this->args['paged']-1 ),
+                $this->args['posts_per_page'] * ( $this->args['paged']-1 ) + $this->args['offset'],
                 $this->args['posts_per_page']
             );          
         }
