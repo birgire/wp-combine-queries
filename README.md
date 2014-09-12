@@ -51,7 +51,7 @@ Then use some of the examples below in your theme or a plugin.
 
 ###Example 1a: 
 
-Here we want to display the newest published page and then the three oldest published posts:
+Here we want to display the first published page in an alphabetical order and then the three oldest published posts:
 
     //-----------------
     // Sub query #1:
