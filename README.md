@@ -18,7 +18,7 @@ Here we extend the `WP_Query` class to achieve this goal. We actually do that tw
  - `WP_Query_Empty`: to get the generated SQL query of each sub-queries, but without doing the database query.
  - `WP_Query_Combine`: to fetch the posts.
 
-I use the trick mentioned [here](http://stackoverflow.com/a/7587423/2078474) to preserve the order of `UNION` sub queries. We can modify it accordingly with our `sublimit` parameter.
+I use the trick mentioned [here](http://stackoverflow.com/a/7587423/2078474) to preserve the order of `UNION` sub queries. 
 
 This implementation supports combining `N` sub-queries.
 
