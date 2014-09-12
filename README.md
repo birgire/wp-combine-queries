@@ -112,6 +112,7 @@ If we want to order the combined query in example 1a, we can use for example:
         'orderby'        => array( 'date' => 'asc', 'title' => 'desc' )
     );
 
+where all the native values of `orderby` should be supported, except for the meta values.
 
 ###Example 2: 
 
