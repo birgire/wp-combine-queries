@@ -184,7 +184,7 @@ We could also combine more than two sub queries, here's an example of four sub-q
 ###Changelog
 
 0.1.1
- - Changed: Coding style and autoloading (Probs: @egill)
+ - Changed: Coding style and autoloading (Props: @egill)
 
 0.1  Various plugin improvements, for example:
  - Added: orderby in the combined query.
@@ -192,7 +192,7 @@ We could also combine more than two sub queries, here's an example of four sub-q
  - Added: offset in the sub queries.
  - Added: paged in the sub queries.
  - Removed: sublimit in the combined query, use posts_per_page instead in sub queries.
- - Fixed: Issue #1 related to max_num_pages (Props @hellofantastic).
+ - Fixed: Issue #1 related to max_num_pages (Props: @hellofantastic).
 
 0.0.4
  - Added: support for offset in the combined query
