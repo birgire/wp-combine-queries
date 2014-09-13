@@ -1,7 +1,7 @@
-<?php 
+<?php
 /**
  * Plugin Name: Combine Queries
- * Description: This plugin allows you to combine multiple WP_Query() queries, into a single one, with the WP_Combine_Query() class. 
+ * Description: This plugin allows you to combine multiple WP_Query() queries, into a single one, with the WP_Combine_Query() class.
  * Plugin URI:  https://github.com/birgire/wp-combine-queries
  * Author:      birgire
  * Author URI:  https://github.com/birgire
@@ -32,16 +32,20 @@
  * Autoload classes:
  */
 
-spl_autoload_register( 'combine_queries_autoload' );
+define( 'WP_COMBINE_ROOT', dirname( __FILE__ ) );
 
-function combine_queries_autoload( $class_name )
-{
-    $path_part 	= plugin_dir_path( __FILE__ );
-    $arr 	= explode( '\\', $class_name );
-    $name_part 	= strtolower( array_pop( $arr ) );            
-    $file_name 	= sprintf( '%sincludes/class_%s.php', $path_part, $name_part );
-    if( file_exists( $file_name ) )
-        require_once( $file_name );
+add_action( 'init', 'wp_combine_queries_classloader' );
 
+function wp_combine_queries_classloader() {
+	spl_autoload_register( 'wp_combine_queries_autoloader' );
+}
+
+function wp_combine_queries_autoloader() {
+	if ( file_exists( WP_COMBINE_ROOT . '/includes/class.wp-combine-queries.php' ) ) {
+		require_once ( WP_COMBINE_ROOT . '/includes/class.wp-combine-queries.php' );
+	}
+	if ( file_exists( WP_COMBINE_ROOT . '/includes/class.wp-query-empty.php' ) ) {
+		require_once ( WP_COMBINE_ROOT . '/includes/class.wp-query-empty.php' );
+	}
 }
 
