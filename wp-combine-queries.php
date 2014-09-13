@@ -6,7 +6,7 @@
  * Author:      birgire
  * Author URI:  https://github.com/birgire
  * License:     GPL2+
- * Version:     0.1
+ * Version:     0.1.1
  */
 
 /*

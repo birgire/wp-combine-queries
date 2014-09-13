@@ -183,6 +183,9 @@ We could also combine more than two sub queries, here's an example of four sub-q
 
 ###Changelog
 
+0.1.1
+ - Changed: Coding style and autoloading (Probs: @egill)
+
 0.1  Various plugin improvements, for example:
  - Added: orderby in the combined query.
  - Added: posts_per_page in the sub queries.
@@ -200,5 +203,4 @@ We could also combine more than two sub queries, here's an example of four sub-q
 
 0.0.2 
  - Added: Input parameter 'union' with possible values UNION and UNION ALL.
- - Fixed: Empty paged resulted in a sql error. ( Props: Robert Hue)
-
+ - Fixed: Empty paged resulted in a sql error. (Props: Robert Hue)
