@@ -128,26 +128,33 @@ class WP_Combine_Queries extends WP_Query {
 		// Collect the generated SQL for each sub-query:
 		foreach ( (array) $this->args['args'] as $a ) {
 			// Fetch the generated SQL sub queries:
-			$q = new WP_Query_Empty( $a, $this->args['sublimit'] );
+			$q = new WP_Query_Empty( $a );
 			$this->sub_sql[] = $q->get_sql();
 			unset( $q );
 		}
 
 		// Order by:
 		$orderby = '';
-		if ( isset( $this->args['orderby'] ) )
-		$orderby = ' ORDER BY ' . str_replace( $GLOBALS['wpdb']->posts . '.', '', $this->orderby );
+		if ( isset( $this->args['orderby'] ) ) {
+			$orderby = str_replace( $GLOBALS['wpdb']->posts . '.', '', $this->orderby );
+		}
+
+		$orderby = apply_filters( 'wcq_orderby', $orderby );
+
+                if( ! empty( $orderby ) ){
+			$orderby = ' ORDER BY ' . $orderby;
+		}
 
 		// Combine all the sub-queries into a single SQL query.
 		$request = '';
 		if ( 0 < count( $this->sub_sql ) ) {
 			$unions  = '(' . join( ') ' . $this->args['union'] . ' (', $this->sub_sql ) . ' ) ';
-			$request = sprintf( "SELECT SQL_CALC_FOUND_ROWS * FROM ( {$unions} ) as combined {$order} LIMIT %s,%s",
+			$request = sprintf( "SELECT SQL_CALC_FOUND_ROWS * FROM ( {$unions} ) as combined {$orderby} LIMIT %s,%s",
 				$this->args['posts_per_page'] * ( $this->args['paged'] - 1 ) + $this->args['offset'],
 				$this->args['posts_per_page']
 			);
 		}
-
+		echo $request;
 		return $request;
 	}
 

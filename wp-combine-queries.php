@@ -1,12 +1,13 @@
 <?php
 /**
- * Plugin Name: Combine Queries
- * Description: This plugin allows you to combine multiple WP_Query() queries, into a single one, with the WP_Combine_Query() class.
- * Plugin URI:  https://github.com/birgire/wp-combine-queries
- * Author:      birgire
- * Author URI:  https://github.com/birgire
- * License:     GPL2+
- * Version:     0.1.1
+ * Plugin Name:  Combine Queries
+ * Description:  This plugin allows you to combine multiple WP_Query() queries, into a single one, with the WP_Combine_Query() class.
+ * Plugin URI:   https://github.com/birgire/wp-combine-queries
+ * Author:       birgire
+ * GitHub Plugin URI: https://github.com/birgire/wp-combine-queries.git
+ * Author URI:   https://github.com/birgire
+ * License:      GPL2+
+ * Version:      0.1.2
  */
 
 /*

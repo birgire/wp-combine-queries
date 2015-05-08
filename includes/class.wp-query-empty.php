@@ -38,11 +38,28 @@ class WP_Query_Empty extends WP_Query {
 		// Remove SQL_CALC_FOUND_ROWS from the SQL query:
 		$this->args['no_found_rows'] = 1;
 
+		// Create a filter for fields:
+		add_filter( 'posts_fields',  array( $this, 'posts_fields' ), PHP_INT_MAX  );
+
 		// Create an empty query:
 		add_filter( 'posts_request',  array( $this, 'posts_request' ), PHP_INT_MAX  );
 
 		// Call the parent WP_Query constructor:
 		parent::__construct( $this->args );
+	}
+
+	/**
+	 * Construct the SQL query from sub queries
+	 *
+	 * @since  0.0.1
+	 * @param  string $request
+	 * @return string $request
+	 */
+	public function posts_fields( $fields ) {
+		remove_filter( current_filter(), array( $this, __FUNCTION__ ), PHP_INT_MAX );
+
+		// Return an empty SQL query:
+		return apply_filters( 'wcq_sub_fields', $fields );
 	}
 
 	/**

@@ -24,6 +24,7 @@ This implementation supports combining `N` sub-queries.
 
 This should also work for main queries, by using the `posts_request` filter, for example. But this needs more testing.
 
+
 ###Notice about the new 0.1 version
 
 The `sublimit` parameter is no longer needed or supported. Instead the `posts_per_page` can be used in the subqueries. If it's not used, then the native default value is used.
@@ -165,7 +166,81 @@ This [example](http://wordpress.stackexchange.com/questions/159228/combining-two
     //---------
     // See example 1a
 
+
 ###Example 3:
+
+Let's combine two meta queries and order by a common meta value:
+
+    //-----------------
+    // Sub query #1:
+    //-----------------
+    $args1 = array(
+       'post_type'      => 'cars',
+       'posts_per_page' => 10,
+       'orderby'        => 'title',
+       'order'          => 'asc',
+       'meta_query'     => array(
+            array(
+                'key'      => 'doors',
+                'value'    => 0,
+                'compare'  => '>=',
+                'type'     => 'UNSIGNED'
+            ),
+        ),
+    );
+
+    //-----------------
+    // Sub query #2:
+    //-----------------
+    $args2 = array(
+       'post_type'      => 'post',
+       'posts_per_page' => 10,
+       'orderby'        => 'date',
+       'order'          => 'desc',
+       'tax_query' => array(
+            array(
+                'taxonomy' => 'category',
+                'field'    => 'slug',
+                'terms'    => 'cars',
+            ),
+        ),
+        'meta_query'     => array(
+            array(
+                'key'      => 'doors',
+                'value'    => 0,
+                'compare'  => '>=',
+                'type'     => 'UNSIGNED'
+            ),
+        ),  
+    );
+
+
+    //------------------------------
+    // Order by a common meta value
+    //------------------------------
+
+    // Modify combined ordering:
+    add_filter( 'wcq_orderby', function( $orderby ) {
+        return 'meta_value ASC';
+    });
+
+    // Modify sub fields:
+    add_filter( 'wcq_sub_fields', function( $fields ) {
+        return $fields . ', meta_value';
+    });
+
+    //---------------------------
+    // Combined queries #1 + #2:
+    //---------------------------
+    $args = array(
+        'posts_per_page' => 5,
+        'orderby'        => 'meta_value',
+        'order'          => 'DESC',
+        'args'           => array( $args1, $args2 ),
+    );
+
+
+###Example 4:
 
 We could also combine more than two sub queries, here's an example of four sub-queries:
 
@@ -182,6 +257,13 @@ We could also combine more than two sub queries, here's an example of four sub-q
 
 
 ###Changelog
+
+0.1.2 (2015-05-08)
+ - Added: Support for the GitHub Updater. 
+ - Added: New filter 'wcq_sub_fields' 
+ - Added: New filter 'wcq_orderby' 
+ - Added: New example for meta value ordering
+ - Fixed: Ordering didn't work correctly.
 
 0.1.1
  - Changed: Coding style and autoloading (Props: @egill)
