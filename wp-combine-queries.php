@@ -7,7 +7,7 @@
  * GitHub Plugin URI: https://github.com/birgire/wp-combine-queries.git
  * Author URI:   https://github.com/birgire
  * License:      GPL2+
- * Version:      0.1.2
+ * Version:      0.1.3
  */
 
 /*

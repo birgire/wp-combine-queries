@@ -82,6 +82,11 @@ class WP_Combine_Queries extends WP_Query {
 			$parents_args['order'] = $this->args['order'];
 		}
 
+		// ignore sticky:
+		if ( isset( $this->args['ignore_sticky_posts'] ) ) {
+			$parents_args['ignore_sticky_posts'] = $this->args['ignore_sticky_posts'];
+		}
+
 		// orderby:
 		if ( isset( $this->args['orderby'] ) ) {
 			$parents_args['orderby'] = $this->args['orderby'];
@@ -141,7 +146,7 @@ class WP_Combine_Queries extends WP_Query {
 
 		$orderby = apply_filters( 'wcq_orderby', $orderby );
 
-                if( ! empty( $orderby ) ){
+        if( ! empty( $orderby ) ){
 			$orderby = ' ORDER BY ' . $orderby;
 		}
 
@@ -154,7 +159,6 @@ class WP_Combine_Queries extends WP_Query {
 				$this->args['posts_per_page']
 			);
 		}
-		echo $request;
 		return $request;
 	}
 

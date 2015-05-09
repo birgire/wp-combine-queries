@@ -258,6 +258,10 @@ We could also combine more than two sub queries, here's an example of four sub-q
 
 ###Changelog
 
+0.1.3 (2015-05-09)
+ - Added: Support for ignory_sticky_posts.
+ - Fixed: Minor 
+
 0.1.2 (2015-05-08)
  - Added: Support for the GitHub Updater. 
  - Added: New filter 'wcq_sub_fields' 
