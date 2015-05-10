@@ -24,12 +24,29 @@ This version is a rewrite of the plugin. The `WP_Combine_Query` class has been r
 
 Now the plugin only supports PHP versions 5.4+.
 
-###Default setup for the `combined_query` attribute:
+###Default 
+
+The default setup for the `combined_query` attribute:
 
     'combined_query' => [        
         'args'   => [],         // [ $args1, $args2, ... ]
         'union'  => 'UNION',    // Possible values are UNION or UNION ALL
      ]
+
+###Filters:
+
+There are two custom filters currently available:
+
+    // Modify combined ordering:
+    add_filter( 'cq_orderby', function( $orderby ) {
+        return $orderby;
+    });
+    
+    // Modify sub fields:
+    add_filter( 'cq_sub_fields', function( $fields ) {
+        return $fields;
+    });
+
 
 ###Installation
 
