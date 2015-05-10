@@ -1,0 +1,109 @@
+<?php
+
+namespace Birgir\CombinedQuery;
+
+/**
+ * Class EmptyQuery
+ *
+ * @since 1.0.0
+ */
+
+class EmptyQuery extends \WP_Query {
+
+	/**
+	 * Array of input arguments
+	 * @var    array
+	 * @since  1.0.0
+	 */
+	protected $args = [];
+
+	/**
+	 * SQL query string
+	 * @var    string
+	 * @since  1.0.0
+	 */
+	protected $sql = '';
+
+	/**
+	 * Activate the empty query mode
+	 *
+	 * @since  1.0.0
+	 */
+        public function cq_activate()
+        {
+		add_action( 'pre_get_posts',  [ $this, 'cq_pre_get_posts' ], PHP_INT_MAX  );           
+		add_filter( 'posts_fields',   [ $this, 'cq_posts_fields' ],  PHP_INT_MAX  );
+		add_filter( 'posts_request',  [ $this, 'cq_posts_request' ], PHP_INT_MAX  );
+        }
+
+	/**
+	 * De-activation the empty query mode
+	 *
+	 * @since  1.0.0
+	 */
+        public function cq_deactivate()
+        {
+		remove_action( 'pre_get_posts',  [ $this, 'cq_pre_get_posts' ], PHP_INT_MAX  );           
+		remove_filter( 'posts_request',  [ $this, 'cq_posts_request' ], PHP_INT_MAX  );
+		remove_filter( 'posts_fields',   [ $this, 'cq_posts_fields' ],  PHP_INT_MAX  );
+        }
+
+	/**
+	 * pre_get_posts callback
+	 *
+	 * @since  1.0.0
+	 * @param  \WP_Query $q
+	 * @return void
+	 */
+        public function cq_pre_get_posts( \WP_Query $q )
+        {               
+		// If posts_per_page is -1, then there's no limit set,
+		// but we do need a limit to be able to keep the order of UNION sub-queries:
+		// @see http://stackoverflow.com/a/7587423/2078474
+		if (  $q->get( 'posts_per_page' )  && '-1' == $q->get( 'posts_per_page' ) )
+			$q->set( 'posts_per_page', 999999 );
+
+		// Remove SQL_CALC_FOUND_ROWS from the SQL query:
+		$q->set( 'no_found_rows', 1 );
+        }
+
+	/**
+	 * Post fields
+	 *
+	 * @since  1.0.0
+	 * @param  string $request
+	 * @return string $request
+	 */
+	public function cq_posts_fields( $fields )
+        {
+		return apply_filters( 'cq_sub_fields', $fields );
+	}
+
+	/**
+	 * Don't run the query (empty query)
+	 *
+	 * @since  1.0.0
+	 * @param  string $request
+	 * @return string $request
+	 */
+	public function cq_posts_request( $request )
+        {
+		// Store the current SQL query:
+		$this->sql = $request;
+
+		// Return an empty SQL query:
+		return '';
+	}
+
+	/**
+	 * Get the SQL query
+	 *
+	 * @since  1.0.0
+	 * @return string $sql
+	 */
+	public function cq_get_sql( )
+        {
+		return $this->sql;
+	}
+
+} // end class
