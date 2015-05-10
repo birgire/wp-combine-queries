@@ -9,7 +9,7 @@ This experimental plugin allows you to combine multiple `WP_Query` queries into 
 
 This started as an answer on Stackoverflow, see [here](http://stackoverflow.com/questions/23555109/wordpress-combine-queries/) and [here](http://wordpress.stackexchange.com/questions/159228/combining-two-wordpress-queries-with-pagination-is-not-working/).
 
-The idea behind this plugin is to use combine the SQL queries for each `WP_Query()` query with `UNION` or `UNION ALL`.
+The idea behind this plugin is to combine the SQL queries for each `WP_Query()` query with `UNION` or `UNION ALL`.
 
 I first noticed this technique in a [great answer on WordPress Development](http://wordpress.stackexchange.com/a/912/26350) by Mike Schinkel.
 
@@ -20,11 +20,13 @@ This implementation supports combining `N` sub-queries.
 
 ###Notice about the new 1.0.0 version
 
-This version is a rewrite of the plugin. The `WP_Combine_Query` class has been removed in favour of simply using the `combined_query` attribute of the `WP_Query` class.
+This version is a total rewrite of the plugin. 
+
+The `WP_Combine_Query` class has been removed in favour of simply using the `combined_query` attribute of the `WP_Query` class.
 
 Now the plugin only supports PHP versions 5.4+.
 
-###Default 
+###Default Settings 
 
 The default setup for the `combined_query` attribute:
 
@@ -33,7 +35,7 @@ The default setup for the `combined_query` attribute:
         'union'  => 'UNION',    // Possible values are UNION or UNION ALL
      ]
 
-###Filters:
+###Custom filters
 
 There are two custom filters currently available:
 
@@ -324,7 +326,8 @@ The above examples are all for secondary queries. So let's apply Example #1a to 
 ###Changelog
 
 1.0.0 (2015-05-10)
- - ** Total Plugin Rewrite **
+ - ** Total Plugin Rewrite ** 
+ - Closed: Ticket #3
  - Added: New classes Main, EmptyQuery and Generator. 
  - Added: Support for 'combined_query' attribute of the WP_Query class.
  - Added: Support only for PHP 5.4+
