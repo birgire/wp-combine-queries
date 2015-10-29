@@ -1,0 +1,3 @@
+/vendor export-ignore
+/composer.lock export-ignore
+/.gitattributes export-ignore

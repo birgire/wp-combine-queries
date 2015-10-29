@@ -19,7 +19,10 @@ namespace Birgir\CombinedQuery;
 
 \add_action( 'plugins_loaded', function()
 {
-    require __DIR__ . '/vendor/autoload.php';
+    if ( file_exists( __DIR__ . '/vendor/autoload.php' ) )
+    {
+        require __DIR__ . '/vendor/autoload.php';
+    }
 } );
 
 
@@ -27,7 +30,7 @@ namespace Birgir\CombinedQuery;
  * Init
  */
 \add_action( 'init', function()
-{    
+{
     if( class_exists( __NAMESPACE__ . '\\Main' ) )
     {
      	$o = new Main;
