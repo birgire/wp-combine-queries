@@ -25,7 +25,7 @@ This version is a total rewrite of the plugin.
 The `WP_Combine_Query` class has been removed in favour of simply using the `combined_query` attribute of the `WP_Query` class.
 
 Now the plugin only supports PHP versions 5.4+.
-
+	
 ###Default Settings 
 
 The default setup for the `combined_query` attribute:
@@ -35,6 +35,8 @@ The default setup for the `combined_query` attribute:
         'union'  => 'UNION',    // Possible values are UNION or UNION ALL
      ]
 
+If you want to remove duplicated posts use `UNION`, else use `UNION ALL`.
+	 
 ###Custom filters
 
 There are two custom filters currently available:
@@ -52,9 +54,21 @@ There are two custom filters currently available:
 
 ###Installation
 
-Upload the plugin to your plugin folder and activate it.
+Upload the plugin to the plugin folder and activate it.
 
-Then use some of the examples below in your theme or a plugin.
+To install dependencies use:
+
+    composer install
+	
+or
+
+	php composer.phar install
+
+within our folder. See [here](https://getcomposer.org/doc/00-intro.md) for more information on how to install Composer.
+	
+Then play with the examples below, in your theme or in a plugin. 
+
+Have fun ;-)
 
 ###Example 1a: 
 
@@ -325,6 +339,10 @@ The above examples are all for secondary queries. So let's apply Example #1a to 
 
 ###Changelog
 
+1.0.1 (2015-11-09)
+ - Fixed: Remove vendor dependency and let the user install it via 'composer install' (Props: @pdufour)
+ - Fixed: Ignore sticky posts in the EmptyQuery class
+ 
 1.0.0 (2015-05-10)
  - ** Total Plugin Rewrite ** 
  - Closed: Ticket #3
