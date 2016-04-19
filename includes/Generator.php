@@ -16,7 +16,7 @@ class Generator
     {
         $this->empty_query = $empty_query;
     }
-                              	
+
     public function get_sqls( $args = [] )
     {
         $sqls = [];
@@ -37,22 +37,32 @@ class Generator
         return $sqls;
     }
 
+	static public function esc_percent( $in_string )
+	{
+        $return = str_replace( '%', '%%', $in_string );
+
+		return $return;
+	}
+
     public function get_request( $args = [], $union = '', $orderby = '', $ppp = 1, $paged = 1, $offset = 0 )
     {
         $request = '';
-        
+
 		$sqls = $this->get_sqls( $args );
-		
+
         if ( 0 < count( $sqls ) )
         {
+			$union = Generator::esc_percent( $union );
+			$sqls = Generator::esc_percent( $sqls );
+
             $unions  = '(' . join( ') ' . $union . ' (', $sqls ) . ' ) ';
-            $request = sprintf( 
+            $request = sprintf(
 				"SELECT SQL_CALC_FOUND_ROWS * FROM ( {$unions} ) as combined {$orderby} LIMIT %d, %d",
                 $ppp * ( $paged - 1 ) + $offset,
                 $ppp
             );
 		}
-		
+
         return $request;
     }
 
