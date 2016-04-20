@@ -10,13 +10,28 @@ namespace Birgir\CombinedQuery;
 
 class Generator
 {
+    /**
+     * @var \Birgir\CombinedQuery\EmptyQuery
+     */
     private $empty_query;
 
+
+    /**
+     * Constructor
+     *
+     * @param  \Birgir\CombinedQuery\EmptyQuery $empty_query
+     * @return void
+     */
     public function __construct( EmptyQuery $empty_query )
     {
         $this->empty_query = $empty_query;
     }
 
+
+    /**
+     * @param array $args
+     * @return array $sqls
+     */
     public function get_sqls( $args = [] )
     {
         $sqls = [];
@@ -37,13 +52,32 @@ class Generator
         return $sqls;
     }
 
-	static public function esc_percent( $in_string )
-	{
-        $return = str_replace( '%', '%%', $in_string );
 
-		return $return;
-	}
+    /**
+     * Escape % for sprintf
+     *
+     * @since 1.0.2
+     *
+     * @param  string $string
+     * @return string $string
+     */
+    static public function esc_percent( $string )
+    {        
+        return str_replace( '%', '%%', $string );
+    }
 
+
+    /**
+     * Get combined SQL query
+     *
+     * @param  array 	$args
+     * @param  string 	$union
+     * @param  string 	$orderby
+     * @param  int 	$ppp
+     * @param  int 	$paged
+     * @param  int 	$offset
+     * @return string 	$string
+     */
     public function get_request( $args = [], $union = '', $orderby = '', $ppp = 1, $paged = 1, $offset = 0 )
     {
         $request = '';
@@ -52,12 +86,13 @@ class Generator
 
         if ( 0 < count( $sqls ) )
         {
-			$union = Generator::esc_percent( $union );
-			$sqls = Generator::esc_percent( $sqls );
+            $union = Generator::esc_percent( $union );
+            $sqls  = Generator::esc_percent( $sqls );
 
             $unions  = '(' . join( ') ' . $union . ' (', $sqls ) . ' ) ';
+
             $request = sprintf(
-				"SELECT SQL_CALC_FOUND_ROWS * FROM ( {$unions} ) as combined {$orderby} LIMIT %d, %d",
+		"SELECT SQL_CALC_FOUND_ROWS * FROM ( {$unions} ) as combined {$orderby} LIMIT %d, %d",
                 $ppp * ( $paged - 1 ) + $offset,
                 $ppp
             );
