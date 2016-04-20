@@ -339,6 +339,9 @@ The above examples are all for secondary queries. So let's apply Example #1a to 
 
 ###Changelog
 
+1.0.2 (2016-04-20)
+ - Fixed: Ticket #6 - Escape % in the Generator class. (Props: @DArcMattr)
+
 1.0.1 (2015-11-09)
  - Fixed: Remove vendor dependency and let the user install it via 'composer install' (Props: @pdufour)
  - Fixed: Ignore sticky posts in the EmptyQuery class
