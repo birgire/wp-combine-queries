@@ -10,11 +10,38 @@ namespace Birgir\CombinedQuery;
 
 class Main
 {
+   
+    /**
+     * @var string
+     */
     private $orderby        = '';
+
+
+    /**
+     * @var array
+     */
     private $combined_query = [];
+
+
+    /**
+     * @var \Birgir\CombinedQuery\Generator
+     */
     private $generator      = null;
+
+
+    /**
+     * @var \wpdb
+     */
     private $db             = null;
                               	
+
+    /**
+     * Init
+     *
+     * @param  \Birgir\CombinedQuery\Generator $generator
+     * @param  \wpdb $db
+     * @return void
+     */
     public function init( Generator $generator, \wpdb $db )
     {
         $this->generator = $generator;
@@ -23,6 +50,14 @@ class Main
         add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ], PHP_INT_MAX );
     }
 
+
+    /**
+     * Callback for the 'pre_get_posts' hook
+     *
+     * @since  1.0.0
+     * @param  \WP_Query $q
+     * @return void
+     */
     public function pre_get_posts( \WP_Query $q )
     {
      	if( $q->get( 'combined_query' ) )
@@ -41,6 +76,14 @@ class Main
         }
     }
 
+
+    /**
+     * Callback for the 'posts_orderby' hook
+     *
+     * @since  1.0.0
+     * @param  string $orderby
+     * @return string $orderby
+     */
     public function posts_orderby( $orderby )
     {
         // Only run once:
@@ -52,30 +95,61 @@ class Main
         return $orderby;
     }
 
+
+    /**
+     * Get posts per page
+     *
+     * @since  1.0.0
+     * @param  \WP_Query $q
+     * @return int 
+     */
     public function get_posts_per_page( \WP_Query $q )
     {
         return 
             isset( $q->query_vars['posts_per_page'] ) 
-            ? $q->query_vars['posts_per_page'] 
-            : get_option( 'posts_per_page' );
+            ? (int) $q->query_vars['posts_per_page'] 
+            : (int) get_option( 'posts_per_page' );
     }
 
+
+    /**
+     * Get offset
+     *
+     * @since  1.0.0
+     * @param  \WP_Query $q
+     * @return int
+     */
     public function get_offset( \WP_Query $q )
     {
         return 
             isset( $this->query_vars['offset'] ) 
-            ? $this->query_vars['offset'] 
+            ? (int) $this->query_vars['offset'] 
             : 0;
     }
 
+    /**
+     * Get paged
+     *
+     * @since  1.0.0
+     * @param  \WP_Query $q
+     * @return int 
+     */
     public function get_paged( \WP_Query $q )
     {
         return 
             isset( $q->query_vars['paged'] ) && 0 < $q->query_vars['paged'] 
-            ? $q->query_vars['paged'] 
+            ? (int) $q->query_vars['paged'] 
             : 1;
     }
 
+
+    /**
+     * Get orderby
+     *
+     * @since  1.0.0
+     * @param  \WP_Query $q
+     * @return string 
+     */
     public function get_orderby( \WP_Query $q )
     {
         $orderby = isset( $this->orderby ) ? str_replace( $this->db->posts . '.', '', $this->orderby ) : '';
@@ -85,6 +159,13 @@ class Main
         return $orderby;
     }
 
+
+    /**
+     * Get union
+     *
+     * @since  1.0.0
+     * @return string 
+     */
     public function get_union()
     {
         return 
@@ -93,6 +174,15 @@ class Main
             : 'UNION';
     }
 
+
+    /**
+     * Get orderby
+     *
+     * @since  1.0.0
+     * @param  string	 $request
+     * @param  \WP_Query $q
+     * @return string 
+     */
     public function posts_request( $request, \WP_Query $q )
     {
         // Only run once:
