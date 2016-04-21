@@ -207,7 +207,7 @@ class Main
     {
         return 
             in_array( strtoupper( $this->combined_query['union'] ), [ 'UNION', 'UNION ALL' ] ) 
-            ? $this->combined_query['union'] 
+            ? strtoupper( $this->combined_query['union'] ) 
             : 'UNION';
     }
 
