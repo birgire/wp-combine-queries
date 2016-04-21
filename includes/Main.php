@@ -172,7 +172,7 @@ class Main
     public function get_paged( \WP_Query $q )
     {
         return 
-            ! isset( $q->query_vars['paged'] ) && 0 < $q->query_vars['paged'] 
+            isset( $q->query_vars['paged'] ) && 0 < $q->query_vars['paged'] 
             ? (int) $q->query_vars['paged'] 
             : 1;
     }
