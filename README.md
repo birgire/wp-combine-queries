@@ -177,7 +177,7 @@ This [example](http://wordpress.stackexchange.com/questions/159228/combining-two
     $args = [
         'posts_per_page'      => 5,
         'ignore_sticky_posts' => 1,
-        'paged'               => ( $paged = get_query_var( 'page' ) ) ? $paged : 1 ,
+        'paged'               => get_query_var( 'page', 1 ),
         'combined_query' => [        
             'args'   => [ $args1, $args2 ],
         ]
@@ -338,6 +338,10 @@ The above examples are all for secondary queries. So let's apply Example #1a to 
 
 
 ###Changelog
+
+1.0.4 (2016-04-21)
+ - Fixed: Adjusted the paged bug that sneaked in with verion 1.0.2 yesterday.
+ - Improved: Simplified the example that uses get_query_var() that can now handle default as an input parameter.
 
 1.0.3 (2016-04-21)
  - Fixed: Ticket #7 - Not able to set the "UNION ALL" union option
