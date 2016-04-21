@@ -339,6 +339,10 @@ The above examples are all for secondary queries. So let's apply Example #1a to 
 
 ###Changelog
 
+1.0.3 (2016-04-21)
+ - Fixed: Ticket #7 - Not able to set the "UNION ALL" union option
+ - Improved: Inline docs
+
 1.0.2 (2016-04-20)
  - Fixed: Ticket #6 - Escape % in the Generator class. (Props: @DArcMattr)
  - Improved: Inline docs
