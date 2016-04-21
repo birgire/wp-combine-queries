@@ -206,7 +206,7 @@ class Main
     public function get_union()
     {
         return 
-            ! in_array( strtoupper( $this->combined_query['union'] ), [ 'UNION', 'UNION ALL' ] ) 
+            in_array( strtoupper( $this->combined_query['union'] ), [ 'UNION', 'UNION ALL' ] ) 
             ? $this->combined_query['union'] 
             : 'UNION';
     }
