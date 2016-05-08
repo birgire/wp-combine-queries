@@ -3,7 +3,7 @@
     "description" : "Modify the WP_Query to support the combined_query parameter. Combine multiple WP_Query queries into a single query.",
     "type" : "wordpress-plugin",
     "keywords" : [ "wordpress" ],
-    "license" : "GPL2+",
+    "license" : "MIT",
     "authors" : [
         {
             "name" : "Birgir Erlendsson"
