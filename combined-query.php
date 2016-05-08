@@ -7,7 +7,7 @@
  * GitHub Plugin URI: https://github.com/birgire/wp-combined-queries.git
  * Author URI:   https://github.com/birgire
  * License:      MIT
- * Version:      1.0.4
+ * Version:      1.0.5
  */
 
 namespace CombinedQuery;

@@ -56,13 +56,13 @@ There are two custom filters currently available:
 
 Upload the plugin to the plugin folder and activate it.
 
-To install dependencies use:
+To install dependencies with Composer (not required):
 
     composer install
 	
 or
 
-	php composer.phar install
+    php composer.phar install
 
 within our folder. See [here](https://getcomposer.org/doc/00-intro.md) for more information on how to install Composer.
 	
@@ -338,6 +338,11 @@ The above examples are all for secondary queries. So let's apply Example #1a to 
 
 
 ###Changelog
+
+1.0.5 (2016-05-08)
+ - Fixed: Ticket #8 - Fallback for those who don't use Composer.
+ - Improved: Removed an explicit call to $GLOBALS['wpdb'] through the use keyword.
+ - Improved: Simplified the namespace to only CombinedQuery.
 
 1.0.4 (2016-04-21)
  - Fixed: Adjusted the paged bug that sneaked in with verion 1.0.2 yesterday.
