@@ -10,31 +10,32 @@
  * Version:      1.0.4
  */
 
-namespace Birgir\CombinedQuery;
-
-
-/**
- * Autoload
- */
-
-\add_action( 'plugins_loaded', function()
-{
-    if ( file_exists( __DIR__ . '/vendor/autoload.php' ) )
-    {
-        require __DIR__ . '/vendor/autoload.php';
-    }
-} );
-
+namespace CombinedQuery;
 
 /**
  * Init
  */
-\add_action( 'init', function()
+\add_action( 'init', function() use ( &$wpdb )
 {
+    // Composer autoload
+    if ( file_exists( __DIR__ . '/vendor/autoload.php' ) )
+    {
+        require __DIR__ . '/vendor/autoload.php';
+    }
+    // Fallback for those who don't use Composer
+    else
+    {
+        require( __DIR__ . '/includes/Main.php' );
+        require( __DIR__ . '/includes/Generator.php' );
+        require( __DIR__ . '/includes/EmptyQuery.php' );
+    }
+
+    // PS: It's propably depatable to use an autoloader  when we hook into the 'init' action to create our instances ;-)
+
     if( class_exists( __NAMESPACE__ . '\\Main' ) )
     {
-     	$o = new Main;
-        $o->init( new Generator( new EmptyQuery ), $GLOBALS['wpdb'] );
+     	$main = new Main;
+        $main->init( new Generator( new EmptyQuery ), $wpdb );
     }
 
 } );
