@@ -1,6 +1,6 @@
 <?php
 
-namespace Birgir\CombinedQuery;
+namespace CombinedQuery;
 
 /**
  * Class Main
@@ -24,7 +24,7 @@ class Main
 
 
     /**
-     * @var \Birgir\CombinedQuery\Generator
+     * @var \CombinedQuery\Generator
      */
     private $generator;
 
@@ -40,7 +40,7 @@ class Main
      *
      * @since  1.0.0
      *
-     * @param  \Birgir\CombinedQuery\Generator $generator
+     * @param  \CombinedQuery\Generator $generator
      * @param  \wpdb $db
      * @return void
      */

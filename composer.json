@@ -14,7 +14,7 @@
         "php" : ">=5.4"
     },
     "autoload": {
-       "psr-4": {"Birgir\\CombinedQuery\\": "includes/"}
+       "psr-4": {"CombinedQuery\\": "includes/"}
    },
     "extra" : {
         "installer-name" : "combined-query"

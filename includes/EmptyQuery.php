@@ -1,6 +1,6 @@
 <?php
 
-namespace Birgir\CombinedQuery;
+namespace CombinedQuery;
 
 /**
  * Class EmptyQuery

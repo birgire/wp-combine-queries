@@ -1,6 +1,6 @@
 <?php
 
-namespace Birgir\CombinedQuery;
+namespace CombinedQuery;
 
 /**
  * Class Generator
@@ -11,7 +11,7 @@ namespace Birgir\CombinedQuery;
 class Generator
 {
     /**
-     * @var \Birgir\CombinedQuery\EmptyQuery
+     * @var \CombinedQuery\EmptyQuery
      */
     private $empty_query;
 
@@ -19,7 +19,7 @@ class Generator
     /**
      * Constructor
      *
-     * @param  \Birgir\CombinedQuery\EmptyQuery $empty_query
+     * @param  \CombinedQuery\EmptyQuery $empty_query
      * @return void
      */
     public function __construct( EmptyQuery $empty_query )
@@ -41,7 +41,7 @@ class Generator
         // Collect the generated SQL for each sub-query:
         foreach ( (array) $args as $sub_args )
         {
-			$this->empty_query->query( $sub_args );
+            $this->empty_query->query( $sub_args );
             $sqls[] = $this->empty_query->cq_get_sql();
         }
 
@@ -82,7 +82,7 @@ class Generator
     {
         $request = '';
 
-		$sqls = $this->get_sqls( $args );
+        $sqls = $this->get_sqls( $args );
 
         if ( 0 < count( $sqls ) )
         {
@@ -96,7 +96,7 @@ class Generator
                 $ppp * ( $paged - 1 ) + $offset,
                 $ppp
             );
-		}
+        }
 
         return $request;
     }
