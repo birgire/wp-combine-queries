@@ -25,9 +25,9 @@ namespace CombinedQuery;
     // Fallback for those who don't use Composer
     else
     {
-        require( __DIR__ . '/includes/Main.php' );
-        require( __DIR__ . '/includes/Generator.php' );
-        require( __DIR__ . '/includes/EmptyQuery.php' );
+        require_once  __DIR__ . '/includes/Main.php';
+        require_once  __DIR__ . '/includes/Generator.php';
+        require_once  __DIR__ . '/includes/EmptyQuery.php';
     }
 
     // PS: It's propably depatable to use an autoloader  when we hook into the 'init' action to create our instances ;-)
