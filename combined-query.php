@@ -30,7 +30,7 @@ namespace CombinedQuery;
         require_once  __DIR__ . '/includes/EmptyQuery.php';
     }
 
-    // PS: It's propably depatable to use an autoloader  when we hook into the 'init' action to create our instances ;-)
+    // PS: It's propably debatable to use an autoloader  when we hook into the 'init' action to create our instances ;-)
 
     if( class_exists( __NAMESPACE__ . '\\Main' ) )
     {
