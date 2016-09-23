@@ -215,11 +215,11 @@ Let's combine two meta queries and order by a common meta value:
     // Sub query #2:
     //-----------------
     $args2 = [
-       'post_type'      => 'post',
-       'posts_per_page' => 10,
-       'orderby'        => 'date',
-       'order'          => 'desc',
-       'tax_query' => [
+        'post_type'      => 'post',
+        'posts_per_page' => 10,
+        'orderby'        => 'date',
+        'order'          => 'desc',
+        'tax_query' => [
             [
                 'taxonomy' => 'category',
                 'field'    => 'slug',
@@ -271,6 +271,86 @@ Let's combine two meta queries and order by a common meta value:
 
 ###Example 4:
 
+Order by common custom field value (meta_key):
+
+    //-----------------
+    // Sub query #1:
+    //-----------------
+    $args1 = [
+       'post_type'      => 'cars',
+       'posts_per_page' => 10,
+       'meta_key'       => 'doors',
+       'orderby'        => 'meta_value';
+       'order'          => 'ASC';
+       'meta_query'     => [
+            [
+                'key'      => 'doors',
+                'value'    => 0,
+                'compare'  => '>=',
+                'type'     => 'UNSIGNED'
+            ],
+        ],
+    ];
+
+    //-----------------
+    // Sub query #2:
+    //-----------------
+    $args2 = [
+        'post_type'      => 'post',
+        'posts_per_page' => 10,
+        'meta_key'       => 'doors',
+        'orderby'        => 'meta_value';
+        'order'          => 'ASC';
+        'tax_query' => [
+            [
+                'taxonomy' => 'category',
+                'field'    => 'slug',
+                'terms'    => 'cars',
+            ],
+        ],
+        'meta_query'     => [
+            [
+                'key'      => 'doors',
+                'value'    => 0,
+                'compare'  => '>=',
+                'type'     => 'UNSIGNED'
+            ],
+        ],  
+    ];
+
+
+    //------------------------------
+    // Order by a common meta value
+    //------------------------------
+
+    // Modify combined ordering:
+    add_filter( 'cq_orderby', function( $orderby ) {
+        return 'meta_value ASC';
+    });
+
+    // Modify sub fields:
+    add_filter( 'cq_sub_fields', function( $fields ) {
+        return $fields . ', wp_postmeta.meta_value';
+    });
+
+    //---------------------------
+    // Combined queries #1 + #2:
+    //---------------------------
+    $args = [
+        'posts_per_page' => 5,
+        'combined_query' => [        
+            'args'   => [ $args1, $args2 ],
+        ]
+    ];
+
+    //---------
+    // Output:
+    //---------
+    // See example 1a
+
+
+###Example 5:
+
 We could also combine more than two sub queries, here's an example of four sub-queries:
 
      $args = [ 
@@ -287,7 +367,7 @@ We could also combine more than two sub queries, here's an example of four sub-q
     // See example 1a
 
 
-###Example 5:
+###Example 6:
 
 The above examples are all for secondary queries. So let's apply Example #1a to the main home query.
 
