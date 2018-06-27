@@ -3,7 +3,7 @@ Combined Query
 
 WordPress plugin - Combined Query
 
-###Description
+### Description
 
 This experimental plugin allows you to combine multiple `WP_Query` queries into a single one, using the `combined_query` attribute.
 
@@ -18,7 +18,7 @@ I use the trick mentioned [here](http://stackoverflow.com/a/7587423/2078474) to 
 This implementation supports combining `N` sub-queries.
 
 
-###Notice about the new 1.0.0 version
+### Notice about the new 1.0.0 version
 
 This version is a total rewrite of the plugin. 
 
@@ -26,7 +26,7 @@ The `WP_Combine_Query` class has been removed in favour of simply using the `com
 
 Now the plugin only supports PHP versions 5.4+.
 	
-###Default Settings 
+### Default Settings 
 
 The default setup for the `combined_query` attribute:
 
@@ -37,7 +37,7 @@ The default setup for the `combined_query` attribute:
 
 If you want to remove duplicated posts use `UNION`, else use `UNION ALL`.
 	 
-###Custom filters
+### Custom filters
 
 There are two custom filters currently available:
 
@@ -52,7 +52,7 @@ There are two custom filters currently available:
     });
 
 
-###Installation
+### Installation
 
 Upload the plugin to the plugin folder and activate it.
 
@@ -70,7 +70,7 @@ Then play with the examples below, in your theme or in a plugin.
 
 Have fun ;-)
 
-###Example 1a: 
+### Example 1a: 
 
 Here we want to display the first published page in an alphabetical order and then the three oldest published posts:
 
@@ -121,7 +121,7 @@ Here we want to display the first published page in an alphabetical order and th
     endif;       
 
 
-###Example 1b: 
+### Example 1b: 
 
 If we want to order the combined query in example 1a, we can use for example:
 
@@ -136,7 +136,7 @@ If we want to order the combined query in example 1a, we can use for example:
         ]
     ];
 
-###Example 2: 
+### Example 2: 
 
 Here we want to display all posts published today, sorted by comment count and after that all posts (excluding today's post) sorted by comment count.
 This [example](http://wordpress.stackexchange.com/questions/159228/combining-two-wordpress-queries-with-pagination-is-not-working) was provided by Robert Hue.
@@ -189,7 +189,7 @@ This [example](http://wordpress.stackexchange.com/questions/159228/combining-two
     // See example 1a
 
 
-###Example 3:
+### Example 3:
 
 Let's combine two meta queries and order by a common meta value:
 
@@ -269,7 +269,7 @@ Let's combine two meta queries and order by a common meta value:
     // See example 1a
 
 
-###Example 4:
+### Example 4:
 
 We could also combine more than two sub queries, here's an example of four sub-queries:
 
@@ -287,7 +287,7 @@ We could also combine more than two sub queries, here's an example of four sub-q
     // See example 1a
 
 
-###Example 5:
+### Example 5:
 
 The above examples are all for secondary queries. So let's apply Example #1a to the main home query.
 
@@ -337,7 +337,7 @@ The above examples are all for secondary queries. So let's apply Example #1a to 
 
 
 
-###Changelog
+### Changelog
 
 1.0.5 (2016-05-08)
  - Fixed: Ticket #8 - Fallback for those who don't use Composer.
