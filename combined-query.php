@@ -7,7 +7,7 @@
  * GitHub Plugin URI: https://github.com/birgire/wp-combined-queries.git
  * Author URI:   https://github.com/birgire
  * License:      MIT
- * Version:      1.0.5
+ * Version:      1.1.0
  */
 
 namespace CombinedQuery;
@@ -15,28 +15,28 @@ namespace CombinedQuery;
 /**
  * Init
  */
-\add_action( 'init', function() use ( &$wpdb )
-{
-    // Composer autoload
-    if ( file_exists( __DIR__ . '/vendor/autoload.php' ) )
-    {
-        require __DIR__ . '/vendor/autoload.php';
-    }
-    // Fallback for those who don't use Composer
-    else
-    {
-        require_once  __DIR__ . '/includes/Main.php';
-        require_once  __DIR__ . '/includes/Generator.php';
-        require_once  __DIR__ . '/includes/EmptyQuery.php';
-    }
+add_action(
+	'init',
+	function() {
 
-    // PS: It's propably debatable to use an autoloader  when we hook into the 'init' action to create our instances ;-)
+		global $wpdb;
 
-    if( class_exists( __NAMESPACE__ . '\\Main' ) )
-    {
-     	$main = new Main;
-        $main->init( new Generator( new EmptyQuery ), $wpdb );
-    }
+		// Composer autoload
+		if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+			require __DIR__ . '/vendor/autoload.php';
+		}
+		// Fallback for those who don't use Composer
+		else {
+			require_once  __DIR__ . '/includes/Main.php';
+			require_once  __DIR__ . '/includes/Generator.php';
+			require_once  __DIR__ . '/includes/EmptyQuery.php';
+		}
 
-} );
+		if ( class_exists( __NAMESPACE__ . '\\Main' ) ) {
+			$main = new Main;
+			$main->init( new Generator( new EmptyQuery ), $wpdb );
+		}
+
+	}
+);
 
