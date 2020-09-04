@@ -341,6 +341,7 @@ The above examples are all for secondary queries. So let's apply Example #1a to 
 
 1.1.0 (2020-09-04)
  - Added: Ticket #19 - Add test cases for argument order workaround. (Props: therealgilles)
+ - Cleanup: phpcs
  
 1.0.5 (2016-05-08)
  - Fixed: Ticket #8 - Fallback for those who don't use Composer.
