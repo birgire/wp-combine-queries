@@ -346,6 +346,10 @@ The above examples are all for secondary queries. So let's apply Example #1a to 
 
 ### Changelog
 
+1.1.1 (2020-09-04)
+ - Added: Add an example how to keep the order by arguments arg1, arg2, ...
+ - Adjusted: UNION ALL test
+
 1.1.0 (2020-09-04)
  - Added: Ticket #19 - Add test cases for argument order workaround. (Props: therealgilles)
  - Cleanup: phpcs
