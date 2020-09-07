@@ -52,6 +52,13 @@ There are two custom filters currently available:
     });
 
 
+To keep the order by arguments arg1, arg2, ... use:
+
+	add_filter( 'cq_orderby', '__return_empty_string' );
+	$query = new WP_Query( $args );
+	remove_filter( 'cq_orderby', '__return_empty_string' );
+
+
 ### Installation
 
 Upload the plugin to the plugin folder and activate it.
@@ -338,6 +345,10 @@ The above examples are all for secondary queries. So let's apply Example #1a to 
 
 
 ### Changelog
+
+1.1.1 (2020-09-04)
+ - Added: Add an example how to keep the order by arguments arg1, arg2, ...
+ - Adjusted: UNION ALL test
 
 1.1.0 (2020-09-04)
  - Added: Ticket #19 - Add test cases for argument order workaround. (Props: therealgilles)
