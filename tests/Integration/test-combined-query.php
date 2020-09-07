@@ -341,6 +341,7 @@ class Test_CombinedQuery extends WP_UnitTestCase {
 
 		$this->assertCount( 4, $query->posts );
 		$this->assertContains( ' as combined', $query->request );
+		$this->assertContains( 'UNION ALL', $query->request );
 	}
 
 }
