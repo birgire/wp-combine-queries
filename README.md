@@ -52,6 +52,13 @@ There are two custom filters currently available:
     });
 
 
+To keep the order by arguments arg1, arg2, ... use:
+
+	add_filter( 'cq_orderby', '__return_empty_string' );
+	$query = new WP_Query( $args );
+	remove_filter( 'cq_orderby', '__return_empty_string' );
+
+
 ### Installation
 
 Upload the plugin to the plugin folder and activate it.
