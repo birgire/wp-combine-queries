@@ -183,7 +183,7 @@ Then we sort all by decreasing comment count.
 			'orderby'             => 'comment_count',
 			'order'               => 'desc',
 		]
-	);
+	];
 
 	//---------
 	// Output:
