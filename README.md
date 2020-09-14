@@ -152,7 +152,7 @@ Then we sort all by decreasing comment count.
     $args1 = [ 
         'post_type'           => 'foo',
         'orderby'             => 'comment_count',
-		'order'               => 'desc',
+	'order'               => 'desc',
         'posts_per_page'      => 100, // adjust to your needs
         'date_query'          => [
             [
@@ -273,7 +273,7 @@ We could also combine more than two sub queries, here's an example of four sub-q
 
      $args = [ 
         'combined_query' => [        
-		'args'           => [ $args1, $args2, $args3, $args4 ],
+		'args' => [ $args1, $args2, $args3, $args4 ],
 		...
         ]
       ];
@@ -288,41 +288,41 @@ We could also combine more than two sub queries, here's an example of four sub-q
 
 The above examples are all for secondary queries. So let's add a query to the main home query:
 
-    add_action( 'pre_get_posts', function( \WP_Query $q )
-    {   
-        if( $q->is_home() && $q->is_main_query() )
-        {
-            //-----------------
-            // Sub query #1:
-            //-----------------
-            $args1 = [
-               'post_type'	    => 'page',
-               'posts_per_page' => 1,
-               'orderby'        => 'title',
-               'order'          => 'asc',
-            ];
-
-			//-----------------
-			// Original query #2:
-			//-----------------    
-			$args2 = $q->query;
-
-			//---------------------------
-			// Combined queries #1 + #2:
-			//---------------------------
-			$args = [
-				'combined_query' => [
-					'args'           => [ $args1, $args2 ],
-					'union'          => 'UNION',
-					'posts_per_page' => 4,
-					'orderby'        => 'none',
-				]
-			];
+    add_action( 'pre_get_posts', function( \WP_Query $q ) {   
         
-            //-----------------------
-            // Modify the Main query:
-            //-----------------------
-            $q->set( 'combined_query',	$args['combined_query'] );
+	if( $q->is_home() && $q->is_main_query() ) {
+	
+		//-----------------
+		// Sub query #1:
+		//-----------------
+		$args1 = [
+		   'post_type'	    => 'page',
+		   'posts_per_page' => 1,
+		   'orderby'        => 'title',
+		   'order'          => 'asc',
+		];
+
+		//-----------------
+		// Original query #2:
+		//-----------------    
+		$args2 = $q->query;
+
+		//---------------------------
+		// Combined queries #1 + #2:
+		//---------------------------
+		$args = [
+			'combined_query' => [
+				'args'           => [ $args1, $args2 ],
+				'union'          => 'UNION',
+				'posts_per_page' => 4,
+				'orderby'        => 'none',
+			]
+		];
+        
+		//-----------------------
+		// Modify the Main query:
+		//-----------------------
+		$q->set( 'combined_query', $args['combined_query'] );
         }
     } );
 
