@@ -58,6 +58,14 @@ There are two custom filters currently available:
 
 To keep the order by arguments arg1, arg2, ... use:
 
+        'combined_query' => [
+			...
+			'orderby' => 'none',
+			...
+        ]
+
+or
+
 	add_filter( 'cq_orderby', '__return_empty_string' );
 	$query = new WP_Query( $args );
 	remove_filter( 'cq_orderby', '__return_empty_string' );
@@ -169,7 +177,7 @@ Then we sort all by decreasing comment count.
     //---------------------------
     $args = [
         'combined_query' => [        
-,            'args'                => [ $args1, $args2 ],
+            'args'                => [ $args1, $args2 ],
 			'posts_per_page'      => 5,
 			'paged'               => 2,
 			'orderby'             => 'comment_count',
@@ -274,7 +282,7 @@ We could also combine more than two sub queries, here's an example of four sub-q
     //---------
     // Output:
     //---------
-    // See example 1a
+    // See example 1
 
 
 ### Example 5:
@@ -323,6 +331,9 @@ The above examples are all for secondary queries. So let's add a query to the ma
 
 
 ### Changelog
+
+1.2.1 (2020-09-14)
+ - Fixed: Readme.
 
 1.2.0 (2020-09-14)
  - Added: Support for ordering by 'none'.
