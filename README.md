@@ -93,52 +93,52 @@ Have fun ;-)
 
 Here we want to display the first published page in an alphabetical order and then the three oldest published posts:
 
-    //-----------------
-    // Sub query #1:
-    //-----------------
-    $args1 = [
-       'post_type'      => 'page',
-       'posts_per_page' => 1,
-       'orderby'        => 'title',
-       'order'          => 'asc',
-    ];
-  
-    //-----------------
-    // Sub query #2:
-    //-----------------
-    $args2 = [
-       'post_type'      => 'post',
-       'posts_per_page' => 3,
-       'orderby'        => 'date',
-       'order'          => 'asc',
-    ];
+	//-----------------
+	// Sub query #1:
+	//-----------------
+	$args1 = [
+		'post_type'      => 'page',
+		'posts_per_page' => 1,
+		'orderby'        => 'title',
+		'order'          => 'asc',
+	];
 
-    //---------------------------
-    // Combined queries #1 + #2:
-    //---------------------------
-    $args = [
-        'combined_query' => [        
-            'args'           => [ $args1, $args2 ],
-            'union'          => 'UNION',
-			'posts_per_page' => 4,
-			'orderby'        => 'none',
-        ]
-    ];
+	//-----------------
+	// Sub query #2:
+	//-----------------
+	$args2 = [
+		'post_type'      => 'post',
+		'posts_per_page' => 3,
+		'orderby'        => 'date',
+		'order'          => 'asc',
+	];
 
-    //---------
-    // Output:
-    //---------
-    $q = new WP_Query( $args );
-    if( $q->have_posts() ):
-    ?><ul><?php
-        while( $q->have_posts() ): $q->the_post();
-            ?><li><a href="<?php the_permalink();?>"><?php the_title();?></a></li><?php
-        endwhile;
-    ?></ul><?php
-        wp_reset_postdata();
-    else:
-        _e( 'Sorry no posts found!' );
-    endif;       
+	//---------------------------
+	// Combined queries #1 + #2:
+	//---------------------------
+	$args = [
+		'combined_query' => [        
+		'args'           => [ $args1, $args2 ],
+		'union'          => 'UNION',
+		'posts_per_page' => 4,
+		'orderby'        => 'none',
+	]
+	];
+
+	//---------
+	// Output:
+	//---------
+	$q = new WP_Query( $args );
+	if( $q->have_posts() ):
+	?><ul><?php
+		while( $q->have_posts() ): $q->the_post();
+	?><li><a href="<?php the_permalink();?>"><?php the_title();?></a></li><?php
+		endwhile;
+	?></ul><?php
+		wp_reset_postdata();
+	else:
+		_e( 'Sorry no posts found!' );
+	endif;       
 
 
 ### Example 2: 
