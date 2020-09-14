@@ -26,13 +26,17 @@ The `WP_Combine_Query` class has been removed in favour of simply using the `com
 
 Now the plugin only supports PHP versions 5.4+.
 	
-### Default Settings 
+### Settings 
 
-The default setup for the `combined_query` attribute:
+The supported settings for the `combined_query` attribute:
 
     'combined_query' => [        
-        'args'   => [],         // [ $args1, $args2, ... ]
-        'union'  => 'UNION',    // Possible values are UNION or UNION ALL
+        'args'           => [ $args1, $args2, ... ], // Array (default [])
+        'union'          => 'UNION',                 // String Possible values are UNION or UNION ALL (default UNION)
+		'posts_per_page' => 10,                      // Integer 1,2,...
+		'offset'         => 0,                       // Integer 0,1,...
+		'orderby'        => 'meta_value_num',        // String (post_name, ..., name, ..., none, meta_value, meta_value_num )
+		'order'          => 'DESC',                  // String (ASC,DESC)
      ]
 
 If you want to remove duplicated posts use `UNION`, else use `UNION ALL`.
@@ -77,7 +81,7 @@ Then play with the examples below, in your theme or in a plugin.
 
 Have fun ;-)
 
-### Example 1a: 
+### Example 1: 
 
 Here we want to display the first published page in an alphabetical order and then the three oldest published posts:
 
@@ -105,10 +109,11 @@ Here we want to display the first published page in an alphabetical order and th
     // Combined queries #1 + #2:
     //---------------------------
     $args = [
-        'posts_per_page' => 4,
         'combined_query' => [        
-            'args'   => [ $args1, $args2 ],
-            'union'  => 'UNION',
+            'args'           => [ $args1, $args2 ],
+            'union'          => 'UNION',
+			'posts_per_page' => 4,
+			'orderby'        => 'none',
         ]
     ];
 
@@ -128,32 +133,18 @@ Here we want to display the first published page in an alphabetical order and th
     endif;       
 
 
-### Example 1b: 
-
-If we want to order the combined query in example 1a, we can use for example:
-
-    //---------------------------
-    // Combined queries #1 + #2:
-    //---------------------------
-    $args = [
-        'posts_per_page' => 4,
-        'orderby'        => [ 'date' => 'asc', 'title' => 'desc' ]
-        'combined_query' => [        
-            'args'   => [ $args1, $args2 ],
-        ]
-    ];
-
 ### Example 2: 
 
-Here we want to display all posts published today, sorted by comment count and after that all posts (excluding today's post) sorted by comment count.
-This [example](http://wordpress.stackexchange.com/questions/159228/combining-two-wordpress-queries-with-pagination-is-not-working) was provided by Robert Hue.
+Here we want to display all foo posts with a date query, sorted by comment count and after that all bar posts sorted by comment count.
+Then we sort all by decreasing comment count.
 
     //-----------------
     // Sub query #1:
     //-----------------
     $args1 = [ 
-        'post_type'           => 'post',
+        'post_type'           => 'foo',
         'orderby'             => 'comment_count',
+		'order'               => 'desc',
         'posts_per_page'      => 100, // adjust to your needs
         'date_query'          => [
             [
@@ -167,33 +158,29 @@ This [example](http://wordpress.stackexchange.com/questions/159228/combining-two
     // Sub query #2:
     //-----------------
     $args2 = [
-        'post_type'           => 'post',
+        'post_type'           => 'bar',
         'orderby'             => 'comment_count',
+		'order'               => 'desc',
         'posts_per_page'      => 100, // adjust to your needs
-        'date_query'          => [
-            [
-               'before' => date('Y-m-d'),
-            ],
-            'inclusive'  => false,
-         ]
     ];
 
     //--------------------------- 
     // Combined queries #1 + #2:
     //---------------------------
     $args = [
-        'posts_per_page'      => 5,
-        'ignore_sticky_posts' => 1,
-        'paged'               => get_query_var( 'page', 1 ),
         'combined_query' => [        
-            'args'   => [ $args1, $args2 ],
+,            'args'                => [ $args1, $args2 ],
+			'posts_per_page'      => 5,
+			'paged'               => 2,
+			'orderby'             => 'comment_count',
+			'order'               => 'desc',
         ]
     );
 
     //---------
     // Output:
     //---------
-    // See example 1a
+    // See example 1
 
 
 ### Example 3:
@@ -248,13 +235,8 @@ Let's combine two meta queries and order by a common meta value:
     // Order by a common meta value
     //------------------------------
 
-    // Modify combined ordering:
-    add_filter( 'cq_orderby', function( $orderby ) {
-        return 'meta_value ASC';
-    });
-
     // Modify sub fields:
-    add_filter( 'cq_sub_fields', function( $fields ) {
+    add_filter( 'cq_sub_fields', $callback = function( $fields ) {
         return $fields . ', meta_value';
     });
 
@@ -262,30 +244,31 @@ Let's combine two meta queries and order by a common meta value:
     // Combined queries #1 + #2:
     //---------------------------
     $args = [
-        'posts_per_page' => 5,
-        'orderby'        => 'meta_value',
-        'order'          => 'DESC',
         'combined_query' => [        
-            'args'   => [ $args1, $args2 ],
+            'args'           => [ $args1, $args2 ],
+			'posts_per_page' => 5,
+			'orderby'        => 'meta_value_num',
+			'order'          => 'DESC',
         ]
     ];
 
     //---------
     // Output:
     //---------
-    // See example 1a
+    // See example 1
 
+	remove_filter( 'cq_sub_fields', $callback );
 
 ### Example 4:
 
 We could also combine more than two sub queries, here's an example of four sub-queries:
 
      $args = [ 
-         'posts_per_page' => 10,
-         'paged'          => 1,
-         'combined_query' => [        
-             'args'   => [ $args1, $args2, $args3, $args4 ],
-         ]
+        'combined_query' => [        
+            'args'           => [ $args1, $args2, $args3, $args4 ],
+			'posts_per_page' => 10,
+			'paged'          => 1,
+        ]
       ];
 
     //---------
@@ -296,7 +279,7 @@ We could also combine more than two sub queries, here's an example of four sub-q
 
 ### Example 5:
 
-The above examples are all for secondary queries. So let's apply Example #1a to the main home query.
+The above examples are all for secondary queries. So let's add a query to the main home query:
 
     add_action( 'pre_get_posts', function( \WP_Query $q )
     {   
@@ -306,38 +289,33 @@ The above examples are all for secondary queries. So let's apply Example #1a to 
             // Sub query #1:
             //-----------------
             $args1 = [
-               'post_type'	=> 'page',
+               'post_type'	    => 'page',
                'posts_per_page' => 1,
                'orderby'        => 'title',
                'order'          => 'asc',
             ];
 
-            //-----------------
-            // Sub query #2:
-            //-----------------
-            $args2 = [
-               'post_type'      => 'post',
-               'posts_per_page' => 3,
-               'orderby'        => 'date',
-               'order'          => 'asc',
-            ];
-        
-            //---------------------------
-            // Combined queries #1 + #2:
-            //---------------------------
-            $args = [
-                'posts_per_page' => 4,
-                'combined_query' => [
-                    'args'   => [ $args1, $args2 ],
-                    'union'  => 'UNION',
-                ]
-            ];
+			//-----------------
+			// Original query #2:
+			//-----------------    
+			$args2 = $q->query;
 
+			//---------------------------
+			// Combined queries #1 + #2:
+			//---------------------------
+			$args = [
+				'combined_query' => [
+					'args'           => [ $args1, $args2 ],
+					'union'          => 'UNION',
+					'posts_per_page' => 4,
+					'orderby'        => 'none',
+				]
+			];
+        
             //-----------------------
             // Modify the Main query:
             //-----------------------
             $q->set( 'combined_query',	$args['combined_query'] );
-            $q->set( 'posts_per_page',  $args['posts_per_page'] );
         }
     } );
 
@@ -346,25 +324,32 @@ The above examples are all for secondary queries. So let's apply Example #1a to 
 
 ### Changelog
 
+1.2.0 (2020-09-14)
+ - Added: Support for ordering by 'none'.
+ - Added: Test cases.
+ - Added: Support for adding parameters (posts_per_page, offset, orderby, order) inside combined_query args.
+ - Fixed: Hooks handling for pre_get_posts example. 
+ - Adjusted: Examples.
+ 
 1.1.1 (2020-09-04)
- - Added: Add an example how to keep the order by arguments arg1, arg2, ...
+ - Added:    Example how to keep the order by arguments arg1, arg2, ...
  - Adjusted: UNION ALL test
 
 1.1.0 (2020-09-04)
- - Added: Ticket #19 - Add test cases for argument order workaround. (Props: therealgilles)
+ - Added:   Ticket #19 - Add test cases for argument order workaround. (Props: therealgilles)
  - Cleanup: phpcs
  
 1.0.5 (2016-05-08)
- - Fixed: Ticket #8 - Fallback for those who don't use Composer.
+ - Fixed:    Ticket #8 - Fallback for those who don't use Composer.
  - Improved: Removed an explicit call to $GLOBALS['wpdb'] through the use keyword.
  - Improved: Simplified the namespace to only CombinedQuery.
 
 1.0.4 (2016-04-21)
- - Fixed: Adjusted the paged bug that sneaked in with verion 1.0.2 yesterday.
+ - Fixed:    Adjusted the paged bug that sneaked in with verion 1.0.2 yesterday.
  - Improved: Simplified the example that uses get_query_var() that can now handle default as an input parameter.
 
 1.0.3 (2016-04-21)
- - Fixed: Ticket #7 - Not able to set the "UNION ALL" union option
+ - Fixed:    Ticket #7 - Not able to set the "UNION ALL" union option
  - Improved: Inline docs
 
 1.0.2 (2016-04-20)

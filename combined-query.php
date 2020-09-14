@@ -7,13 +7,13 @@
  * GitHub Plugin URI: https://github.com/birgire/wp-combined-queries.git
  * Author URI:   https://github.com/birgire
  * License:      MIT
- * Version:      1.1.1
+ * Version:      1.2.0
  */
 
 namespace CombinedQuery;
 
 /**
- * Init
+ * Init.
  */
 add_action(
 	'init',
@@ -21,20 +21,20 @@ add_action(
 
 		global $wpdb;
 
-		// Composer autoload
+		// Composer autoload.
 		if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 			require __DIR__ . '/vendor/autoload.php';
 		}
-		// Fallback for those who don't use Composer
+		// Fallback for those who don't use Composer.
 		else {
-			require_once  __DIR__ . '/includes/Main.php';
-			require_once  __DIR__ . '/includes/Generator.php';
-			require_once  __DIR__ . '/includes/EmptyQuery.php';
+			require_once __DIR__ . '/includes/Main.php';
+			require_once __DIR__ . '/includes/Generator.php';
+			require_once __DIR__ . '/includes/EmptyQuery.php';
 		}
 
 		if ( class_exists( __NAMESPACE__ . '\\Main' ) ) {
-			$main = new Main;
-			$main->init( new Generator( new EmptyQuery ), $wpdb );
+			$main = new Main();
+			$main->init( new Generator( new EmptyQuery() ), $wpdb );
 		}
 
 	}
