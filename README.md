@@ -30,14 +30,14 @@ Now the plugin only supports PHP versions 5.4+.
 
 The supported settings for the `combined_query` attribute:
 
-    'combined_query' => [        
-        'args'           => [ $args1, $args2, ... ], // Array (default [])
-        'union'          => 'UNION',                 // String Possible values are UNION or UNION ALL (default UNION)
+	'combined_query' => [        
+		'args'           => [ $args1, $args2, ... ], // Array (default [])
+		'union'          => 'UNION',                 // String Possible values are UNION or UNION ALL (default UNION)
 		'posts_per_page' => 10,                      // Integer 1,2,...
 		'offset'         => 0,                       // Integer 0,1,...
 		'orderby'        => 'meta_value_num',        // String (post_name, ..., name, ..., none, meta_value, meta_value_num )
 		'order'          => 'DESC',                  // String (ASC,DESC)
-     ]
+	]
 
 If you want to remove duplicated posts use `UNION`, else use `UNION ALL`.
 	 
