@@ -130,11 +130,11 @@ Here we want to display the first published page in an alphabetical order and th
 	//---------
 	$q = new WP_Query( $args );
 	if( $q->have_posts() ):
-	?><ul><?php
+		?><ul><?php
 		while( $q->have_posts() ): $q->the_post();
-	?><li><a href="<?php the_permalink();?>"><?php the_title();?></a></li><?php
+			?><li><a href="<?php the_permalink();?>"><?php the_title();?></a></li><?php
 		endwhile;
-	?></ul><?php
+		?></ul><?php
 		wp_reset_postdata();
 	else:
 		_e( 'Sorry no posts found!' );
@@ -146,49 +146,49 @@ Here we want to display the first published page in an alphabetical order and th
 Here we want to display all foo posts with a date query, sorted by comment count and after that all bar posts sorted by comment count.
 Then we sort all by decreasing comment count.
 
-    //-----------------
-    // Sub query #1:
-    //-----------------
-    $args1 = [ 
-        'post_type'           => 'foo',
-        'orderby'             => 'comment_count',
-	'order'               => 'desc',
-        'posts_per_page'      => 100, // adjust to your needs
-        'date_query'          => [
-            [
-                'after' => date('Y-m-d'),
-            ],
-            'inclusive'  => true,
-         ]
-    ];
-
-    //-----------------   
-    // Sub query #2:
-    //-----------------
-    $args2 = [
-        'post_type'           => 'bar',
-        'orderby'             => 'comment_count',
-	'order'               => 'desc',
-        'posts_per_page'      => 100, // adjust to your needs
-    ];
-
-    //--------------------------- 
-    // Combined queries #1 + #2:
-    //---------------------------
-    $args = [
-        'combined_query' => [        
-		'args'                => [ $args1, $args2 ],
-		'posts_per_page'      => 5,
-		'paged'               => 2,
+	//-----------------
+	// Sub query #1:
+	//-----------------
+	$args1 = [ 
+		'post_type'           => 'foo',
 		'orderby'             => 'comment_count',
 		'order'               => 'desc',
-        ]
-    );
+		'posts_per_page'      => 100, // adjust to your needs
+		'date_query'          => [
+			[
+				'after' => date('Y-m-d'),
+			],
+			'inclusive'  => true,
+		]
+	];
 
-    //---------
-    // Output:
-    //---------
-    // See example 1
+	//-----------------   
+	// Sub query #2:
+	//-----------------
+	$args2 = [
+		'post_type'           => 'bar',
+		'orderby'             => 'comment_count',
+		'order'               => 'desc',
+		'posts_per_page'      => 100, // adjust to your needs
+	];
+
+	//--------------------------- 
+	// Combined queries #1 + #2:
+	//---------------------------
+	$args = [
+		'combined_query' => [        
+			'args'                => [ $args1, $args2 ],
+			'posts_per_page'      => 5,
+			'paged'               => 2,
+			'orderby'             => 'comment_count',
+			'order'               => 'desc',
+		]
+	);
+
+	//---------
+	// Output:
+	//---------
+	// See example 1
 
 
 ### Example 3:
