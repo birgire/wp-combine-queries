@@ -58,11 +58,11 @@ There are two custom filters currently available:
 
 To keep the order by arguments arg1, arg2, ... use:
 
-        'combined_query' => [
-			...
-			'orderby' => 'none',
-			...
-        ]
+    'combined_query' => [
+	...
+	'orderby' => 'none',
+	...
+    ]
 
 or
 
