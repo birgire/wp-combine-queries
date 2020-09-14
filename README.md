@@ -168,7 +168,7 @@ Then we sort all by decreasing comment count.
     $args2 = [
         'post_type'           => 'bar',
         'orderby'             => 'comment_count',
-		'order'               => 'desc',
+	'order'               => 'desc',
         'posts_per_page'      => 100, // adjust to your needs
     ];
 
@@ -177,11 +177,11 @@ Then we sort all by decreasing comment count.
     //---------------------------
     $args = [
         'combined_query' => [        
-            'args'                => [ $args1, $args2 ],
-			'posts_per_page'      => 5,
-			'paged'               => 2,
-			'orderby'             => 'comment_count',
-			'order'               => 'desc',
+		'args'                => [ $args1, $args2 ],
+		'posts_per_page'      => 5,
+		'paged'               => 2,
+		'orderby'             => 'comment_count',
+		'order'               => 'desc',
         ]
     );
 
@@ -253,10 +253,10 @@ Let's combine two meta queries and order by a common meta value:
     //---------------------------
     $args = [
         'combined_query' => [        
-            'args'           => [ $args1, $args2 ],
-			'posts_per_page' => 5,
-			'orderby'        => 'meta_value_num',
-			'order'          => 'DESC',
+		'args'           => [ $args1, $args2 ],
+		'posts_per_page' => 5,
+		'orderby'        => 'meta_value_num',
+		'order'          => 'DESC',
         ]
     ];
 
@@ -273,9 +273,8 @@ We could also combine more than two sub queries, here's an example of four sub-q
 
      $args = [ 
         'combined_query' => [        
-            'args'           => [ $args1, $args2, $args3, $args4 ],
-			'posts_per_page' => 10,
-			'paged'          => 1,
+		'args'           => [ $args1, $args2, $args3, $args4 ],
+		...
         ]
       ];
 
