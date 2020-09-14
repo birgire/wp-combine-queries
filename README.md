@@ -59,16 +59,16 @@ There are two custom filters currently available:
 To keep the order by arguments arg1, arg2, ... use:
 
     'combined_query' => [
-	...
-	'orderby' => 'none',
-	...
+        ...
+        'orderby' => 'none',
+        ...
     ]
 
 or
 
-	add_filter( 'cq_orderby', '__return_empty_string' );
-	$query = new WP_Query( $args );
-	remove_filter( 'cq_orderby', '__return_empty_string' );
+    add_filter( 'cq_orderby', '__return_empty_string' );
+    $query = new WP_Query( $args );
+    remove_filter( 'cq_orderby', '__return_empty_string' );
 
 
 ### Installation
