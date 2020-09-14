@@ -118,11 +118,11 @@ Here we want to display the first published page in an alphabetical order and th
 	//---------------------------
 	$args = [
 		'combined_query' => [        
-		'args'           => [ $args1, $args2 ],
-		'union'          => 'UNION',
-		'posts_per_page' => 4,
-		'orderby'        => 'none',
-	]
+			'args'           => [ $args1, $args2 ],
+			'union'          => 'UNION',
+			'posts_per_page' => 4,
+			'orderby'        => 'none',
+		]
 	];
 
 	//---------
