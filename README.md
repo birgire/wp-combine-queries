@@ -3,7 +3,7 @@ Combined Query
 
 WordPress plugin - Combined Query
 
-[![Build Status](https://travis-ci.org/birgire/wp-combine-queries.svg?branch=master)](https://travis-ci.org/birgire/wp-combine-queries
+[![Build Status](https://travis-ci.org/birgire/wp-combine-queries.svg?branch=master)](https://travis-ci.org/birgire/wp-combine-queries)
 [![GitHub license](https://img.shields.io/github/license/birgire/wp-combine-queries.svg)](https://github.com/birgire/wp-combine-queries/blob/master/LICENCE)
 [![Packagist](https://img.shields.io/packagist/v/birgir/wp-combine-queries.svg)](https://packagist.org/packages/birgir/wp-combine-queries)
 
