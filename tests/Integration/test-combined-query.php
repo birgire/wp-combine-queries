@@ -671,7 +671,6 @@ class Test_CombinedQuery extends WP_UnitTestCase {
 
 	/**
 	 * Tests subsequent queries.
-	 * @group test
 	 */
 	public function test_subsequent_queries() {
 
