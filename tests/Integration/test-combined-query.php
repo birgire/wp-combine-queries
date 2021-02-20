@@ -669,4 +669,139 @@ class Test_CombinedQuery extends WP_UnitTestCase {
 		$this->assertSame( $query->posts[3]->post_title, 'page3' );
 	}
 
+	/**
+	 * Tests subsequent queries.
+	 */
+	public function test_subsequent_queries() {
+
+		// Create pages.
+		self::factory()->post->create(
+			array(
+				'post_type'  => 'page',
+				'post_title' => 'page1',
+				'post_date'  => '2019-12-04 00:00:00',
+			)
+		);
+		self::factory()->post->create(
+			array(
+				'post_type'  => 'page',
+				'post_title' => 'page2',
+				'post_date'  => '2019-12-03 00:00:00',
+			)
+		);
+		self::factory()->post->create(
+			array(
+				'post_type'  => 'page',
+				'post_title' => 'page3',
+				'post_date'  => '2019-12-02 00:00:00',
+			)
+		);
+		self::factory()->post->create(
+			array(
+				'post_type'  => 'page',
+				'post_title' => 'page4',
+				'post_date'  => '2019-12-01 00:00:00',
+			)
+		);
+
+		// Create posts.
+		self::factory()->post->create(
+			array(
+				'post_type'  => 'post',
+				'post_title' => 'post1',
+				'post_date'  => '2018-12-04 00:00:00',
+			)
+		);
+		self::factory()->post->create(
+			array(
+				'post_type'  => 'post',
+				'post_title' => 'post2',
+				'post_date'  => '2018-12-03 00:00:00',
+			)
+		);
+		self::factory()->post->create(
+			array(
+				'post_type'  => 'post',
+				'post_title' => 'post3',
+				'post_date'  => '2018-12-02 00:00:00',
+			)
+		);
+		self::factory()->post->create(
+			array(
+				'post_type'  => 'post',
+				'post_title' => 'post4',
+				'post_date'  => '2018-12-01 00:00:00',
+			)
+		);
+
+		// -----------------
+		// Sub query #1:
+		// -----------------
+		$args1 = [
+			'post_type'      => 'page',
+			'posts_per_page' => 1,
+			'orderby'        => 'title',
+			'order'          => 'desc',
+		];
+
+		// -----------------
+		// Sub query #2:
+		// -----------------
+		$args2 = [
+			'post_type'      => 'post',
+			'posts_per_page' => 3,
+			'orderby'        => 'date',
+			'order'          => 'asc',
+		];
+
+		// ---------------------------
+		// Combined queries #1 + #2:
+		// ---------------------------
+		$args = [
+			'combined_query' => [
+				'args'           => [ $args1, $args2 ],
+				'union'          => 'UNION',
+				'posts_per_page' => 4,
+			],
+		];
+
+		// Order by order desc (default of WP_Query).
+		$query1 = new WP_Query( $args );
+
+
+		// ---------------------------
+		// Normal sub query.
+		// ---------------------------
+		$args = [
+			'posts_per_page' => 3,
+			'post_type' => 'post',
+		];
+
+		// Order by order desc (default of WP_Query).
+		$query = new WP_Query( $args );
+
+
+		// ---------------------------
+		// Combined queries #1 + #2:
+		// ---------------------------
+		$args = [
+			'combined_query' => [
+				'args'           => [ $args1, $args2 ],
+				'union'          => 'UNION ALL',
+				'posts_per_page' => 2,
+			],
+		];
+
+		// Order by order desc (default of WP_Query).
+		$query2 = new WP_Query( $args );
+
+		$this->assertCount( 3, $query->posts );
+		$this->assertNotContains( 'UNION', $query->request );
+		$this->assertCount( 4, $query1->posts );
+		$this->assertContains( 'UNION', $query1->request );
+		$this->assertCount( 2, $query2->posts );
+		$this->assertContains( 'UNION', $query2->request );
+
+	}
+
 }
