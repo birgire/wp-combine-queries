@@ -60,22 +60,25 @@ class Main {
 	 * @param  WP_Query $q
 	 */
 	public function pre_get_posts( WP_Query $q ) {
-		if ( $q->get( 'combined_query' ) ) {
 
-			// Default arguments.
-			$defaults = [
-				'union' => 'UNION',
-				'args'  => [],
-			];
-
-			$this->combined_query = wp_parse_args( $q->get( 'combined_query' ), $defaults );
-
-			// Setup SQL generation.
-			add_filter( 'posts_request', [ $this, 'posts_request' ], PHP_INT_MAX, 2 );
-
-			// Get the orderby part.
-			add_filter( 'posts_orderby', [ $this, 'posts_orderby' ], PHP_INT_MAX );
+		if ( ! $q->get( 'combined_query' ) ) {
+			return;
 		}
+
+		// Default arguments.
+		$defaults = [
+			'union' => 'UNION',
+			'args'  => [],
+		];
+
+		$this->combined_query = wp_parse_args( $q->get( 'combined_query' ), $defaults );
+
+		// Setup SQL generation.
+		add_filter( 'posts_request', [ $this, 'posts_request' ], PHP_INT_MAX, 2 );
+
+		// Get the orderby part.
+		add_filter( 'posts_orderby', [ $this, 'posts_orderby' ], PHP_INT_MAX );
+
 	}
 
 	/**
@@ -88,6 +91,10 @@ class Main {
 	 * @return string
 	 */
 	public function posts_request( $request, WP_Query $q ) {
+
+		if ( ! $q->get( 'combined_query' ) ) {
+			return $request;
+		}
 
 		remove_action( 'pre_get_posts', [ $this, 'pre_get_posts' ], PHP_INT_MAX );
 		remove_filter( 'posts_request', [ $this, 'posts_request' ], PHP_INT_MAX );
