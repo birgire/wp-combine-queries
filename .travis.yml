@@ -6,15 +6,11 @@ language: php
 notifications:
   email:
     on_success: never
-    on_failure: change
+    on_failure: never
 
 cache:
   directories:
     - vendor
-    - $HOME/.composer/cache
-
-install:
-  - composer install --prefer-dist
 
 matrix:
   include:
@@ -22,24 +18,18 @@ matrix:
       env: WP_VERSION=latest
     - php: 7.3
       env: WP_VERSION=latest
-    - php: 7.3
-      env: WP_TRAVISCI=phpcs
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
       bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-      # Install exactly the PHP version we want to use
       curl -sS "https://phar.phpunit.de/phpunit-7.5.20.phar" -o /tmp/phpunit
       chmod +x /tmp/phpunit
     fi
-  - |
-    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
-      composer global require wp-coding-standards/wpcs
-      phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
-    fi
 script:
   - |
-    /tmp/phpunit --verbose
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      /tmp/phpunit --verbose
+    fi
 
