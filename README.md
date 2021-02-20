@@ -338,6 +338,9 @@ The above examples are all for secondary queries. So let's add a query to the ma
 
 ### Changelog
 
+1.2.2 (2021-02-20)
+ - Fixed: Fixes #14 regarding subsequent queries. (Props: @Suranex)
+
 1.2.1 (2020-09-14)
  - Fixed: Readme.
 
