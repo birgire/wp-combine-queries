@@ -26,29 +26,13 @@ matrix:
       env: WP_VERSION=latest
     - php: 7.3
       env: WP_VERSION=latest
-    - php: 7.2
-      env: WP_VERSION=latest
-    - php: 7.1
-      env: WP_VERSION=latest
-    - php: 7.0
-      env: WP_VERSION=latest
-    - php: 5.6
-      env: WP_VERSION=latest
-    - php: 5.6
-      env: WP_VERSION=trunk
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
       bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-      if [[ ${TRAVIS_PHP_VERSION:0:2} == "5." ]]; then
-        composer global require "phpunit/phpunit=5.*"
-      elif [[ ${TRAVIS_PHP_VERSION:0:3} == "7.0" ]]; then
-        composer global require "phpunit/phpunit=5.*"
-      else
-        composer global require "phpunit/phpunit=7.*"
-      fi
+      composer global require "phpunit/phpunit=7.*"
     fi
   - |
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
