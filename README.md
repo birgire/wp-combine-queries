@@ -338,6 +338,9 @@ The above examples are all for secondary queries. So let's add a query to the ma
 
 ### Changelog
 
+(2022-03-03)
+ - Fixed: Wrong plugin URI in header (Props: therealgilles)
+
 1.2.2 (2021-02-20)
  - Fixed: Fixes #14 regarding subsequent queries. (Props: @Suranex)
 
